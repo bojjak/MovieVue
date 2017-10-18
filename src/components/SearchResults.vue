@@ -29,7 +29,7 @@ export default {
   watch: {
     // watch URL, so when you change movie from this component, content will reload
     searchResponse: function (newVal, oldVal) {
-      console.log(newVal)
+      alert(1)
     }
   },
   beforeMount () {
