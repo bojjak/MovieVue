@@ -1,17 +1,20 @@
 <template>
   <div class="Single">
-    <div class="jumbotron jumbotron-fluid" :style="{ 'background-image': 'url(\'https://image.tmdb.org/t/p/w500' + movie.poster_path + '\')' }">
+    <div class="jumbotron jumbotron-fluid" :style="{ 'background-image': 'url(\'https://image.tmdb.org/t/p/w500' + show.poster_path + '\')' }">
     </div>
 
     <div class="container">
-      <h1 v-text="movie.title"></h1>
-      <h4> {{ movie.tagline }} </h4>
-      <span><i class="fa fa-star-o" aria-hidden="true"></i> {{ movie.vote_average }} <i class="fa fa-star-o" aria-hidden="true"></i></span>
+      <h1 v-text="show.name"></h1>
+      <h4> {{ show.tagline }} </h4>
+      <span><i class="fa fa-star-o" aria-hidden="true"></i> {{ show.vote_average }} <i class="fa fa-star-o" aria-hidden="true"></i></span>
 
-      <p>Genres: <span class="badge badge-pill badge-light" v-for="genre in movie.genres"> {{ genre.name }} </span></p>
+      <p>Genres: <span class="badge badge-pill badge-light" v-for="genre in show.genres"> {{ genre.name }} </span></p>
+
+      <p>Seasons: <span>{{ show.number_of_seasons }}</span> </p>
+      <p>Episodes: <span>{{ show.number_of_episodes }}</span> </p>
 
 
-      <p>Summary: <p>{{ movie.overview }}</p> </p>
+      <p>Summary: <p>{{ show.overview }}</p> </p>
 
       <p>Cast:</p>
       <table class="table table-hover">
@@ -27,7 +30,11 @@
           <tr v-for="(cast, index) in casts.slice(0, 10)">
             <th scope="row">{{ index + 1 }}</th>
             <td><img :src="'https://image.tmdb.org/t/p/w500' + cast.profile_path" alt="Img not available" class="rounded-circle"></td>
-            <td>{{ cast.name }}</td>
+            <td>
+              <router-link :to="{path: '/actor/' + cast.id}">
+                {{ cast.name }}
+              </router-link>
+            </td>
             <td>{{ cast.character }}</td>
           </tr>
         </tbody>
@@ -40,14 +47,14 @@
     <div class="container">
       <h3>Suggestions:</h3>
       <div class="row">
-        <div class="col-md-4" v-for="movie in movieSuggestions.slice(0, 3)">
+        <div class="col-md-4" v-for="show in movieSuggestions.slice(0, 3)">
             <div class="card">
-              <router-link  :to="{path: '/movie/' + movie.id}">
-                <img class="card-img-top" :src="'https://image.tmdb.org/t/p/w250_and_h141_bestv2' + movie.backdrop_path" alt="Card image cap">
+              <router-link  :to="{path: '/show/' + show.id}">
+                <img class="card-img-top" :src="'https://image.tmdb.org/t/p/w250_and_h141_bestv2' + show.backdrop_path" alt="Card image cap">
               </router-link>
               <div class="card-body">
-                <router-link :to="{path: '/movie/' + movie.id}">
-                  <h4 class="card-title">{{ movie.title }}</h4>
+                <router-link :to="{path: '/show/' + show.id}">
+                  <h4 class="card-title">{{ show.name }}</h4>
                 </router-link> 
               </div>
             </div>
@@ -64,7 +71,7 @@ import axios from 'axios' // enable axios api requests
 export default {
   props: ['id'],
 
-  name: 'SingleMovie',
+  name: 'SingleSeries',
 
   watch: {
     // watch URL, so when you change movie from this component, content will reload
@@ -84,7 +91,7 @@ export default {
 
   data () {
     return {
-      movie: [],
+      show: [],
       movieSuggestions: [],
       casts: []
     }
@@ -96,11 +103,11 @@ export default {
       let that = this
       axios({
         method: 'get',
-        url: 'http://api.themoviedb.org/3/movie/' + paramId + '?api_key=d6567c81b3f90902e0886a226056f0d6&page=1',
+        url: 'http://api.themoviedb.org/3/tv/' + paramId + '?api_key=d6567c81b3f90902e0886a226056f0d6&page=1',
         responseType: 'stream'
       })
         .then(function (response) {
-          that.movie = response.data
+          that.show = response.data
         })
     },
     getSuggestions (param) {
@@ -108,7 +115,7 @@ export default {
       let that = this
       axios({
         method: 'get',
-        url: 'http://api.themoviedb.org/3/movie/' + param + '/similar?api_key=d6567c81b3f90902e0886a226056f0d6',
+        url: 'http://api.themoviedb.org/3/tv/' + param + '/similar?api_key=d6567c81b3f90902e0886a226056f0d6',
         responseType: 'stream'
       })
         .then(function (response) {
@@ -119,7 +126,7 @@ export default {
       let that = this
       axios({
         method: 'get',
-        url: 'http://api.themoviedb.org/3/movie/' + param + '/credits?api_key=d6567c81b3f90902e0886a226056f0d6',
+        url: 'http://api.themoviedb.org/3/tv/' + param + '/credits?api_key=d6567c81b3f90902e0886a226056f0d6',
         responseType: 'stream'
       })
         .then(function (response) {

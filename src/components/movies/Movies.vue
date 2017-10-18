@@ -6,16 +6,16 @@
       <div class="col-md-12">
         <nav aria-label="Page navigation example" class="col-xs-12 d-flex justify-content-center">
           <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="javascript:void(0);" :disabled="true" @click="paginationPage(-1)" >Previous</a></li>
+            <!-- <li class="page-item"><a class="page-link" href="javascript:void(0);" :disabled="true" @click="paginationPage(-1)" >Previous</a></li> -->
             <li class="page-item"><a class="page-link" href="javascript:void(0);" @click="setPage(1)">1</a></li>
             <li class="page-item"><a class="page-link" href="javascript:void(0);" @click="setPage(2)">2</a></li>
             <li class="page-item"><a class="page-link" href="javascript:void(0);" @click="setPage(3)">3</a></li>
-            <li class="page-item"><a class="page-link" href="javascript:void(0);" @click="paginationPage(1)">Next</a></li>
+            <!-- <li class="page-item"><a class="page-link" href="javascript:void(0);" @click="paginationPage(1)">Next</a></li> -->
           </ul>
         </nav>
         </div>
       
-        <div class="col-md-4 d-flex align-items-stretch" v-for="movie in movieList">
+        <div class="col-md-3 d-flex align-items-stretch" v-for="movie in movieList">
           <div class="card" style="width: 20rem;">
             <router-link  :to="{path: '/movie/' + movie.id}">
               <img class="card-img-top" :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="Card image cap">
@@ -24,7 +24,7 @@
               <router-link :to="{path: '/movie/' + movie.id}">
                 <h4 class="card-title">{{ movie.title }}</h4>
               </router-link> 
-              <p class="card-text">{{ movie.overview }}</p>
+              <p class="card-text">{{ movie.vote_average }}</p>
             </div>
           </div>
         </div>        

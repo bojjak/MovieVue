@@ -13,6 +13,9 @@
             <hr>
             <p class="m-0"><strong>Birthday</strong></p>
             <p>{{ actor.birthday }}</p>
+            <hr v-if="actor.deathday">
+            <p class="m-0" v-if="actor.deathday"><strong>Deathday:</strong></p>
+            <p>{{ actor.deathday }}</p>
             <hr>
             <p class="m-0"><strong>Place of Birth</strong></p>
             <p>{{ actor.place_of_birth }}</p>
@@ -22,11 +25,11 @@
           </div>
         </div>
         <div class="col-md-8">
-          <h1>{{ actor.name }} <a :href="imdbLink" v-if="actor.imdb_id"><i class="fa fa-imdb" aria-hidden="true"></i></a> <img src="http://www.ecsmokes.com/assets/images/under-18-no-admit.png" v-if="actor.adult == true"></h1>
+          <h1>{{ actor.name }} <a :href="imdbLink" v-if="actor.imdb_id" target="_blank"><i class="fa fa-imdb" aria-hidden="true"></i></a> <img src="http://www.ecsmokes.com/assets/images/under-18-no-admit.png" v-if="actor.adult == true"></h1>
 
           <p>{{ actor.biography }}</p>
 
-          <p>Known for:</p>
+          <p><strong>Known for:</strong></p>
           <table class="table table-hover">
             <thead>
               <tr>
@@ -43,7 +46,11 @@
                   <img :src="'https://image.tmdb.org/t/p/w500' + cast.poster_path" alt="Img not available" class="img-fluid" v-if="cast.poster_path">
                   <img :src="'https://image.tmdb.org/t/p/w500' + cast.backdrop_path" alt="Img not available" class="img-fluid" v-if="!cast.poster_path">
                 </td>
-                <td>{{ cast.title || cast.name }}</td>
+                <td>
+                  <router-link :to="{path: '/movie/' + cast.id}">
+                    {{ cast.name }} {{ cast.title }}
+                  </router-link>
+                </td>
                 <td>{{ cast.character }}</td>
               </tr>
             </tbody>
