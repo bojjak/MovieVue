@@ -19,15 +19,15 @@
             <hr>
             <p class="m-0"><strong>Place of Birth</strong></p>
             <p>{{ actor.place_of_birth }}</p>
-            <hr>
-            <p class="m-0"><strong>Known Credits:</strong></p>
-            <p>{{ casts.length }}</p>
+
           </div>
         </div>
         <div class="col-md-8">
           <h1>{{ actor.name }} <a :href="imdbLink" v-if="actor.imdb_id" target="_blank"><i class="fa fa-imdb" aria-hidden="true"></i></a> <img src="http://www.ecsmokes.com/assets/images/under-18-no-admit.png" v-if="actor.adult == true"></h1>
 
           <p>{{ actor.biography }}</p>
+
+        
 
           <p><strong>Known for:</strong></p>
           <table class="table table-hover">
@@ -65,9 +65,9 @@
 
 <script>
 import axios from 'axios' // enable axios api requests
+
 export default {
   props: ['id'],
-
   name: 'SingleActor',
 
   watch: {
