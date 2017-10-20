@@ -1,47 +1,68 @@
 <template>
   <div class="Single">
-    <div class="jumbotron jumbotron-fluid" :style="{ 'background-image': 'url(\'https://image.tmdb.org/t/p/w500' + movie.poster_path + '\')' }">
-    </div>
+    <!-- <div class="jumbotron jumbotron-fluid" :style="{ 'background-image': 'url(\'https://image.tmdb.org/t/p/w500' + movie.poster_path + '\')' }">
+    </div> -->
 
     <div class="container">
-      <h1 v-text="movie.title"></h1>
-      <h4> {{ movie.tagline }} </h4>
-      <span><i class="fa fa-star-o" aria-hidden="true"></i> {{ movie.vote_average }} <i class="fa fa-star-o" aria-hidden="true"></i></span>
+      <div class="row">
+        <div class="col-md-4">
+          <img :src="'https://image.tmdb.org/t/p/w300_and_h450_bestv2' + movie.poster_path" alt="Card image cap" class="img-fluid">
+        </div>
+        <div class="col-md-8">
+          <h1>{{ movie.title }}  <img src="http://www.ecsmokes.com/assets/images/under-18-no-admit.png" v-if="movie.adult == true"></h1>
+          <h2><span><i class="fa fa-star-o" aria-hidden="true"></i> {{ movie.vote_average }} <i class="fa fa-star-o" aria-hidden="true"></i></span></h2>
+          <h4> {{ movie.tagline }} </h4>
 
-      <p>Genres: <span class="badge badge-pill badge-light" v-for="genre in movie.genres"> {{ genre.name }} </span></p>
+          <p>Genres: <span class="badge badge-pill badge-light" v-for="genre in movie.genres"> {{ genre.name }} </span></p>
 
+          <p>Summary: <p>{{ movie.overview }}</p> </p>
+          
+        </div>
+      </div>
+    
+    <hr>
 
-      <p>Summary: <p>{{ movie.overview }}</p> </p>
+    <div class="row">
+      <div class="col-md-9">
+        <p>Cast:</p>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th></th>
+              <th>Name</th>
+              <th>Character</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(cast, index) in casts.slice(0, 10)">
+              <th scope="row">{{ index + 1 }}</th>
+              <td><img :src="'https://image.tmdb.org/t/p/w500' + cast.profile_path" alt="Img not available" class="rounded-circle"></td>
+              <td>
+                  <router-link :to="{path: '/actor/' + cast.id}">
+                    {{ cast.name }}
+                  </router-link>
+              </td>
+              <td>{{ cast.character }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-      <p>Cast:</p>
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th></th>
-            <th>Name</th>
-            <th>Character</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(cast, index) in casts.slice(0, 10)">
-            <th scope="row">{{ index + 1 }}</th>
-            <td><img :src="'https://image.tmdb.org/t/p/w500' + cast.profile_path" alt="Img not available" class="rounded-circle"></td>
-            <td>
-                <router-link :to="{path: '/actor/' + cast.id}">
-                  {{ cast.name }}
-                </router-link>
-            </td>
-            <td>{{ cast.character }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="col-md-3">
+        <p class="mb-0"><strong>Status:</strong></p>
+        <p>{{ movie.status }}</p>
+        <hr>
+        <p class="mb-0"><strong>Runtime:</strong></p>
+        <p>{{ movie.runtime }} min</p>
+        <hr>
+      </div>
 
     </div>
 
     <hr>
 
-    <div class="container">
+    <div class="row">
       <h3>Suggestions:</h3>
       <div class="row">
         <div class="col-md-4" v-for="movie in movieSuggestions.slice(0, 3)">
@@ -58,7 +79,7 @@
           </div>
       </div>
     </div>
-    
+    </div>
 
   </div>
 </template>
@@ -79,7 +100,7 @@ export default {
     }
   },
 
-  beforeMount () {
+  mounted () {
     // load all data before mounting this component
     this.getThisMovie(this.id)
     this.getSuggestions(this.id)

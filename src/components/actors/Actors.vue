@@ -15,7 +15,7 @@
         </nav>
         </div>
       
-        <div class="col-md-4 d-flex align-items-stretch" v-for="actor in actorsList">
+        <div class="col-md-3 d-flex align-items-stretch" v-for="actor in actorsList">
           <div class="card" style="width: 20rem;">
             <router-link  :to="{path: '/actor/' + actor.id}">
               <img class="card-img-top" :src="'https://image.tmdb.org/t/p/w500' + actor.profile_path" alt="Card image cap">

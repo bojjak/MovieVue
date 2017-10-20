@@ -15,7 +15,7 @@
         </nav>
         </div>
       
-        <div class="col-md-4 d-flex align-items-stretch" v-for="show in movieList">
+        <!-- <div class="col-md-4 d-flex align-items-stretch" v-for="show in movieList">
           <div class="card" style="width: 20rem;">
             <router-link  :to="{path: '/show/' + show.id}">
               <img class="card-img-top" :src="'https://image.tmdb.org/t/p/w500' + show.poster_path" alt="Card image cap">
@@ -27,16 +27,21 @@
               <p class="card-text">{{ show.overview }}</p>
             </div>
           </div>
-        </div>        
+        </div>  -->    
+        <movie-box v-for="show in seriesList" :movie="show"></movie-box>   
       </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import MovieBox from '@/components/MovieBox'
 
 export default {
   name: 'Series',
+  components: {
+    'movie-box': MovieBox
+  },
   beforeMount () {
     this.getMovies()
   },
@@ -44,19 +49,18 @@ export default {
     return {
       page: 1,
       msg: 'Popular Series',
-      movieList: []
+      seriesList: []
     }
   },
   methods: {
     getMovies () {
-      let that = this
       axios({
         method: 'get',
         url: 'http://api.themoviedb.org/3/tv/popular?api_key=d6567c81b3f90902e0886a226056f0d6&page=' + this.page,
         responseType: 'stream'
       })
-        .then(function (response) {
-          that.movieList = response.data.results
+        .then(response => {
+          this.seriesList = response.data.results
         })
     },
     paginationPage (param) {

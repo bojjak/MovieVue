@@ -14,8 +14,10 @@
           </ul>
         </nav>
         </div>
-      
-        <div class="col-md-3 d-flex align-items-stretch" v-for="movie in movieList">
+        
+        <MovieBox v-for="movie in movieList" :movie="movie"></MovieBox>    
+
+        <!-- <div class="col-md-3 d-flex align-items-stretch" v-for="movie in movieList">
           <div class="card" style="width: 20rem;">
             <router-link  :to="{path: '/movie/' + movie.id}">
               <img class="card-img-top" :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="Card image cap">
@@ -27,16 +29,20 @@
               <p class="card-text">{{ movie.vote_average }}</p>
             </div>
           </div>
-        </div>        
+        </div>  -->       
       </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import MovieBox from '@/components/MovieBox'
 
 export default {
   name: 'Movies',
+  components: {
+    'MovieBox': MovieBox
+  },
   beforeMount () {
     this.getMovies()
   },
