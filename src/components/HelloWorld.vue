@@ -6,26 +6,26 @@
       <div class="row">
 
         <div class="col-md-6">
-          <div class="card">
+          <div class="card bg-dark text-white mb-3">
             <div class="card-header">
               <h3>Aired shows</h3>
             </div>
             <div class="card-body">
               <div class="row">
-                <MovieBox v-for="airMovie in airedSeries.slice(0, 4)" :movie="airMovie"></MovieBox>
+                <SmallMovieBox v-for="airMovie in airedSeries.slice(0, 4)" :movie="airMovie"></SmallMovieBox>
               </div>
             </div>
           </div>
         </div>
 
         <div class="col-md-6">
-          <div class="card">
+          <div class="card bg-dark text-white mb-3">
             <div class="card-header">
               <h3>In theaters</h3>
             </div>
             <div class="card-body">
               <div class="row">
-                <MovieBox v-for="airMovie in currentMovies.slice(0, 4)" :movie="airMovie"></MovieBox>
+                <SmallMovieBox v-for="airMovie in currentMovies.slice(0, 4)" :movie="airMovie"></SmallMovieBox>
               </div>
             </div>
           </div>
@@ -50,12 +50,14 @@
 
 <script>
 import MovieBox from '@/components/MovieBox'
+import SmallMovieBox from '@/components/SmallMovieBox'
 import axios from 'axios' // enable axios api requests
 
 export default {
   name: 'Home',
   components: {
-    'MovieBox': MovieBox
+    'MovieBox': MovieBox,
+    'SmallMovieBox': SmallMovieBox
   },
   mounted () {
     this.getCurrentSeries()
