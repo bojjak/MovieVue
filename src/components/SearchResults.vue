@@ -9,7 +9,7 @@
             <search-result-box :resultData="single"></search-result-box>
           </div>
         </tab>
-        <tab name="TV shows" :quantity="2">
+        <tab name="TV shows" :quantity="showResults.length">
           <div class="col-md-12 mb-3" v-for="single in showResults">
             <search-result-box :resultData="single"></search-result-box>
           </div>
@@ -19,7 +19,7 @@
             <search-result-box :resultData="single"></search-result-box>
           </div>
         </tab>
-        <tab name="Collections" :quantity="5">
+        <tab name="Collections" :quantity="collectionResults.length">
           <div class="col-md-12 mb-3" v-for="single in collectionResults">
             <search-result-box :resultData="single"></search-result-box>
           </div>

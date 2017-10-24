@@ -7,9 +7,10 @@
                 class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" 
                 v-for="tab in tabs"
                 :class="{ 'active': tab.isActive }"
+                :disabled="tab.quantity <= 0"
                 @click="selectTab(tab)">
           {{ tab.name }}
-          <span class="badge badge-dark badge-pill"></span>
+          <span class="badge badge-dark badge-pill" v-if="tab.quantity > 0">{{ tab.quantity }}</span>
         </button>
 
       </div>
