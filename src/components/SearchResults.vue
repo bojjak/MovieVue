@@ -2,10 +2,36 @@
   <div class="search-results">
     <div class="container">
       <h3>{{ headline }}</h3>
+      
+      <tabs>
+        <tab name="Movies" :selected="true" :quantity="movieResults.length">
+          <div class="col-md-12 mb-3" v-for="single in movieResults">
+            <search-result-box :resultData="single"></search-result-box>
+          </div>
+        </tab>
+        <tab name="TV shows" :quantity="2">
+          <div class="col-md-12 mb-3" v-for="single in showResults">
+            <search-result-box :resultData="single"></search-result-box>
+          </div>
+        </tab>
+        <tab name="People" :quantity="personResults.length">
+          <div class="col-md-12 mb-3" v-for="single in personResults">
+            <search-result-box :resultData="single"></search-result-box>
+          </div>
+        </tab>
+        <tab name="Collections" :quantity="5">
+          <div class="col-md-12 mb-3" v-for="single in collectionResults">
+            <search-result-box :resultData="single"></search-result-box>
+          </div>
+        </tab>
+      </tabs>
 
-      <div class="row">
+
+      
+
+     <!--  <div class="row">
         <div class="col-md-3">
-          <div class="list-group">
+          <div class="list-group mb-3">
             <button type="button" class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center active" :class="{ disabled: movieResults.length == 0 }">
               Movies
               <span class="badge badge-dark badge-pill" v-if="movieResults.length > 0">{{ movieResults.length }}</span>
@@ -18,7 +44,7 @@
               People
               <span class="badge badge-dark badge-pill" v-if="personResults.length > 0">{{ personResults.length }}</span>
             </button>
-            <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" :class="{ disabled: collectionResults.length == 0 }">
+            <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" :class="{ disabled: collectionResults.length == 0 }" >
               Collections
               <span class="badge badge-dark badge-pill" v-if="collectionResults.length > 0">{{ collectionResults.length }}</span>
             </button>
@@ -34,7 +60,7 @@
 
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     
 
@@ -43,18 +69,20 @@
 
 <script>
 import SearchResultsBox from '@/components/SearchResultsBox'
+import Tabs from '@/components/Tabs'
+import Tab from '@/components/Tab'
 import axios from 'axios' // enable axios api requests
 
 export default {
   props: ['searchQuery'],
   name: 'SearchResults',
   components: {
-    'search-result-box': SearchResultsBox
+    'search-result-box': SearchResultsBox,
+    'tabs': Tabs,
+    'tab': Tab
   },
   watch: {
-    // watch URL, so when you change movie from this component, content will reload
     searchQuery: function (newVal, oldVal) {
-      // asd
       this.searchMovie(newVal)
       this.searchShows(newVal)
       this.searchPeople(newVal)
@@ -63,7 +91,6 @@ export default {
   },
   beforeMount () {
     // load all data before mounting this component
-    this.changeHeadline()
     this.searchMovie(this.searchQuery)
     this.searchShows(this.searchQuery)
     this.searchPeople(this.searchQuery)
@@ -71,7 +98,7 @@ export default {
   },
   data () {
     return {
-      headline: 'There is no data for your search',
+      headline: 'Your results',
       results: [],
       movieResults: [],
       showResults: [],
@@ -80,11 +107,6 @@ export default {
     }
   },
   methods: {
-    changeHeadline () {
-      if (this.searchQuery != null) {
-        this.headline = 'Your Search Results:'
-      }
-    },
     searchMovie (param) {
       axios({
         method: 'get',
