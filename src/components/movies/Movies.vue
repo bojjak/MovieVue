@@ -66,7 +66,7 @@ export default {
         })
     },
     paginationPage (param) {
-      if (this.page-- <= 0 || this.page ++ >= 4) {
+      if (this.page <= 0 || this.page ++ >= 4) {
         return
       }
       this.page += param

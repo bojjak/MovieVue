@@ -19,7 +19,6 @@ export default {
   },
   mounted () {
     this.isActive = this.selected
-    this.$emit('quantityEmit', this.quantity)
   }
 }
 </script>

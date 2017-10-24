@@ -14,20 +14,7 @@
           </ul>
         </nav>
         </div>
-      
-        <!-- <div class="col-md-4 d-flex align-items-stretch" v-for="show in movieList">
-          <div class="card" style="width: 20rem;">
-            <router-link  :to="{path: '/show/' + show.id}">
-              <img class="card-img-top" :src="'https://image.tmdb.org/t/p/w500' + show.poster_path" alt="Card image cap">
-            </router-link>
-            <div class="card-body">
-              <router-link :to="{path: '/movie/' + show.id}">
-                <h4 class="card-title">{{ show.title }}</h4>
-              </router-link> 
-              <p class="card-text">{{ show.overview }}</p>
-            </div>
-          </div>
-        </div>  -->    
+        
         <movie-box v-for="show in seriesList" :movie="show"></movie-box>   
       </div>
   </div>

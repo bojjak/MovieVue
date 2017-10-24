@@ -7,7 +7,7 @@ import Series from '@/components/series/Series'
 import SingleSeries from '@/components/series/SingleSeries'
 import Actors from '@/components/actors/Actors'
 import SingleActor from '@/components/actors/SingleActor'
-import SearchResults from '@/components/SearchResults'
+import SearchResults from '@/components/search/SearchResults'
 
 Vue.use(Router)
 
